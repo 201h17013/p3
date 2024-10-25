@@ -1,0 +1,17 @@
+# Usa la imagen base de Ubuntu para el contenedor 
+FROM ubuntu:latest
+
+# Actualiza los repositorios, paquetes y instala Apache2 y MySQL server
+RUN apt-get update && apt-get install -y \
+    apache2 \
+    mysql-server
+
+# Exponemos el puerto 80 para acceder a Apache2
+EXPOSE 80
+
+# Copia un script de inicialización para iniciar los servicios
+COPY start_services.sh /start_services.sh
+RUN chmod +x /start_services.sh
+
+# Comando por defecto que inicia los servicios y mantiene el contenedor corriendo
+CMD ["/start_services.sh"]
